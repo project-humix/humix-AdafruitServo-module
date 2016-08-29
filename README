@@ -1,0 +1,8 @@
+# humix-AdafruitServo-module
+This is a simple module to control the adafruit servo/PWM pi HAT
+
+
+## Prerequite
+```
+sudo apt-get update; sudo apt-get install libi2c-dev
+```
