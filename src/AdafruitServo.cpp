@@ -39,7 +39,7 @@ v8::Eternal<v8::Function> AdafruitServo::sFunction;
 #define __REGISTRY            0x40
 static I2Cdev* gI2Cdev = new I2Cdev("/dev/i2c-1");
 static bool gInit = false;
-float pulseWidthUnit = 20000.0/4096.0;
+float tick = 20000.0/4096.0;
 
 /*static*/
 void AdafruitServo::V8New(const v8::FunctionCallbackInfo<v8::Value> &args)
@@ -149,7 +149,7 @@ void AdafruitServo::SetPulseWidth(const FunctionCallbackInfo<v8::Value> &args)
     v8::Local<Context> ctx = args.GetIsolate()->GetCurrentContext();
     int32_t channel = args[0]->Int32Value(ctx).FromMaybe(0);
     int32_t pulsewidth = args[1]->Int32Value(ctx).FromMaybe(0);
-    pulsewidth = (int32_t)((float)(pulsewidth)/pulseWidthUnit);
+    pulsewidth = (int32_t)((float)(pulsewidth)/tick);
 
     gI2Cdev->writeByte(__REGISTRY,__LED0_ON_L+4*channel, 0 & 0xFF);
     gI2Cdev->writeByte(__REGISTRY,__LED0_ON_H+4*channel, 0 >> 8);
